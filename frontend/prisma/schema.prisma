@@ -1,0 +1,36 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Paquete {
+  id       String  @id @default(cuid())
+  nombre   String
+  precio   Float
+  incluye  String[]  
+  dias     String
+  pagos    Pago[]
+}
+
+model Pago {
+  id                    String    @id @default(cuid())
+  paymentId             String    @unique
+  status                String
+  statusDetail          String
+  createdAt             DateTime  @default(now())
+  amount                Decimal
+  currency              String
+  paymentType           String
+  paymentMethod         String
+  feeTransactionType    String
+  feeTransactionAmount  Decimal
+  paqueteId             String
+  paquete               Paquete   @relation(fields: [paqueteId], references: [id])
+
+  @@index([createdAt])
+}
