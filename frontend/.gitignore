@@ -45,3 +45,5 @@ next-env.d.ts
 prisma/migrations
 prisma/seed.ts
 frontend_app.tar
+
+docker-compose.yml
